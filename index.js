@@ -1,28 +1,46 @@
-import { dessertsData } from "./data.js";
-import { createNewArticle, createNewCartItem } from "./utils.js";
+import { createNewCartConfirmationItem } from "./components/cartConfirmationItem.js";
+import { createNewCartItem } from "./components/cartItem.js";
+import { createNewDessertCard } from "./components/dessertCard.js";
+import { formatNumberWithTwoDecimals } from "./utils.js";
 
 let cart = [];
+let dessertsData = [];
 let currentId = 0;
 
-dessertsData.forEach((dessert) => createNewArticle(dessert));
+await fetch("./data.json")
+  .then((res) => res.json())
+  .then((data) => {
+    dessertsData = data.map((dessert, index) => {
+      index++;
+      return { ...dessert, id: index };
+    });
+    console.log(dessertsData);
+  })
+  .catch((error) => console.error(error));
+
+dessertsData.forEach((dessert) => createNewDessertCard(dessert));
 
 const incrementBtns = document.querySelectorAll(".increment-btn");
 const decrementBtns = document.querySelectorAll(".decrement-btn");
 const addToCartBtns = document.querySelectorAll(".add-to-cart-btn");
 const addQuantityBtns = document.querySelectorAll(".add-quantity");
+const confirmationBtn = document.getElementById("confirm-btn");
+const confirmationModal = document.getElementById("confirmation-modal");
+const startNewOrderBtn = document.getElementById("start-new-order-btn");
 
 const handleAddToCartClick = (e) => {
   const clickedBtn = e.target;
   const card = e.target.closest(".card");
   const quantityBtn = card.querySelector(".add-quantity");
+
   currentId = +card.id;
   const correspondingDessert = dessertsData.find(
     (dessert) => dessert.id === currentId
   );
+  const correspondingItemInCart = cart.find((item) => item.id === currentId);
 
-  if (!cart.includes(correspondingDessert)) {
-    // cart.push(correspondingDessert);
-    cart = [...cart, correspondingDessert];
+  if (!correspondingItemInCart) {
+    cart = [...cart, { ...correspondingDessert, quantity: 0 }];
   }
 
   resetAddToCartButtons();
@@ -31,15 +49,56 @@ const handleAddToCartClick = (e) => {
   quantityBtn.classList.remove("hidden");
 
   update(cart);
+
+  const removeItemBtns = document.querySelectorAll(".remove-item-btn");
+
+  removeItemBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      console.log(e);
+      const item = e.target.closest(".cart__item");
+      const itemId = +item.dataset.itemId;
+
+      removeItem(itemId);
+    });
+  });
 };
 
 const update = (cart) => {
   const cartContainer = document.getElementById("cart");
+  const emptyCart = document.getElementById("empty-cart");
+  const confirmBtn = document.getElementById("confirm-btn");
+  const total = document.getElementById("total");
+  const neutral = document.getElementById("neutral");
+
   cartContainer.innerHTML = "";
-  if (cart.length === 0)
-    return (cartContainer.innerHTML = `<li>The cart is empty.</li>`);
+
+  if (cart.length === 0) {
+    confirmBtn.classList.add("hidden");
+    total.classList.add("hidden");
+    neutral.classList.add("hidden");
+    emptyCart.classList.remove("hidden");
+
+    return;
+  }
+  emptyCart.classList.add("hidden");
+  confirmBtn.classList.remove("hidden");
+  total.classList.remove("hidden");
+  neutral.classList.remove("hidden");
+
   cart.forEach((item) => {
     createNewCartItem(item);
+  });
+
+  const removeItemBtns = document.querySelectorAll(".remove-item-btn");
+
+  removeItemBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      console.log(e);
+      const item = e.target.closest(".cart__item");
+      const itemId = +item.dataset.itemId;
+
+      removeItem(itemId);
+    });
   });
 
   getTotal(cart);
@@ -53,7 +112,7 @@ const getTotal = (cart) => {
     total += item.price * item.quantity;
   });
 
-  totalHtml.textContent = String(total);
+  totalHtml.textContent = formatNumberWithTwoDecimals(total);
 };
 
 update(cart);
@@ -89,7 +148,6 @@ incrementBtns.forEach((btn) => {
 
 decrementBtns.forEach((btn) => {
   btn.addEventListener("click", (e) => {
-    console.log(e);
     handleQuantity(currentId, "decrement");
   });
 });
@@ -115,4 +173,28 @@ const resetAddToCartButtons = () => {
   });
 };
 
-console.log("hello");
+confirmationBtn.addEventListener("click", () => {
+  cart.forEach((item) => createNewCartConfirmationItem(item));
+  confirmationModal.classList.add("open");
+});
+
+startNewOrderBtn.addEventListener("click", () => {
+  resetOrder();
+  update(cart);
+});
+
+const removeItem = (itemId) => {
+  cart = cart.filter((item) => item.id !== itemId);
+  const dessertsItemDom = document.getElementById(itemId);
+  dessertsItemDom.querySelector(".quantity").textContent = 0;
+  update(cart);
+};
+
+const resetOrder = () => {
+  cart = [];
+  confirmationModal.classList.remove("open");
+  const dessertsDom = document.querySelectorAll(".desserts__item");
+  dessertsDom.forEach(
+    (dessert) => (dessert.querySelector(".quantity").textContent = 0)
+  );
+};

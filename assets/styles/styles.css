@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap");
+
 :root {
   --primary: hsl(14, 86%, 42%);
   --green: hsl(159, 69%, 38%);
@@ -18,6 +20,7 @@ html {
   font-weight: 400;
   list-style: none;
   color: var(--black);
+  font-family: "Red Hat Text", sans-serif;
 }
 
 body {
@@ -33,7 +36,7 @@ body {
 
 .header .title {
   font-size: 2rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--black);
 }
 
@@ -45,6 +48,7 @@ body {
 
 .desserts-container {
   width: calc((800 / 1440) * 100vw);
+  flex-grow: 2;
 }
 
 .items-center {
@@ -59,10 +63,21 @@ body {
   justify-content: space-between;
 }
 
-.card {
+.justify-center {
+  justify-content: center;
+}
+
+.desserts__item {
   flex: 1;
   min-width: 250px;
   max-width: 250px;
+  position: relative;
+}
+
+.card {
+  /* flex: 1;
+  min-width: 250px;
+  max-width: 250px; */
   position: relative;
 }
 
@@ -132,6 +147,7 @@ body {
   border: solid 1px var(--primary);
   color: var(--black);
   background-color: #fff;
+  font-weight: 600;
 }
 
 .btn.btn--add:hover {
@@ -173,6 +189,7 @@ body {
 }
 
 .hidden {
+  position: absolute;
   opacity: 0;
   transform: translate(-50%, -100%) !important;
 }
@@ -214,6 +231,23 @@ body {
   padding-bottom: 1.5rem;
   border-bottom: 2px solid var(--bg-primary);
   margin-bottom: 1.5rem;
+  min-width: fit-content;
+  /* min-width: 500px; */
+}
+
+.cart__item {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--bg-primary);
+
+  &:last-child {
+    padding: 0;
+    padding-top: 16px;
+    border-color: transparent;
+  }
+}
+
+.bold {
+  font-weight: 600;
 }
 
 .cart__item .container {
@@ -257,6 +291,11 @@ body {
   padding: 1rem;
   border-radius: 16px;
   justify-content: center;
+  flex-wrap: nowrap;
+  min-width: fit-content;
+  figcaption {
+    font-size: 1rem;
+  }
 }
 
 .btn.btn--confirm {
@@ -293,4 +332,165 @@ body {
 
 .desserts-list {
   flex: 1;
+}
+
+.empty-cart {
+  figcaption {
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-align: center;
+  }
+}
+
+.modal {
+  background-color: transparent;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 100;
+  display: none;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    opacity: 0.2;
+  }
+}
+
+.open {
+  display: flex;
+}
+
+.confirmation {
+  position: relative;
+  z-index: 100;
+  background-color: var(--white);
+  padding: calc((40 / 1440) * 100vw);
+  border-radius: 16px;
+  width: calc(((600 - 2 * 40) / 1440) * 100vw);
+}
+
+.confirmation__header {
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+
+  .logo {
+    margin-bottom: 1rem;
+  }
+
+  .title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--black);
+  }
+
+  .text {
+    color: var(--text-secondary);
+    font-weight: 600;
+  }
+}
+
+.list {
+  background-color: var(--bg-primary);
+  padding: 1.25rem;
+  border-radius: 8px;
+  row-gap: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.image-wrapper.thumbnail {
+  height: 50px;
+  width: 50px;
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.list__item {
+  height: fit-content;
+}
+
+.list__item__info {
+  gap: 0;
+  height: 50px;
+  /* background-color: pink; */
+  justify-content: space-between;
+
+  .name {
+    font-weight: 600;
+    color: var(--black);
+  }
+
+  .quantity {
+    font-weight: 600;
+    color: var(--primary);
+  }
+
+  .price {
+    color: var(--text-primary);
+  }
+}
+
+.list__item__total {
+  margin-left: auto;
+  color: var(--black);
+}
+
+.order-total {
+  justify-content: space-between;
+
+  .total-price {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+}
+
+@media all and (max-width: 936px) {
+  .desserts-list {
+    width: 100%;
+    flex-grow: unset;
+  }
+
+  .desserts-container {
+    width: auto;
+  }
+
+  .desserts__item {
+    flex: unset;
+    width: 100%;
+    min-width: none;
+    max-width: none;
+  }
+  /* 
+  .card {
+    flex: unset;
+    width: 100%;
+    min-width: none;
+    max-width: none;
+  } */
+}
+
+@media all and (max-width: 700px) {
+  html {
+    font-size: 13px;
+  }
+
+  body {
+    padding: 0 calc((24 / 375) * 100vw);
+  }
+
+  .container--main {
+    flex-direction: column;
+  }
 }
