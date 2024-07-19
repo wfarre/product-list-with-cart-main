@@ -8,7 +8,7 @@ export const createNewDessertCard = (el, index) => {
   dessertsItem.innerHTML = `
   <article class="card" id=${el.id}>
       <div class="image-wrapper">
-              <picture>
+              <picture loading="lazy">
                 <source media="(min-width:650px)" srcset=${el.image.tablet}>
                 <source media="(min-width:800px)" srcset=${el.image.desktop}>
                 <img src=${el.image.mobile} alt=${el.name}>
