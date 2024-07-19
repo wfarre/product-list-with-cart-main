@@ -1,0 +1,68 @@
+.container {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.container.items-center {
+  align-items: center;
+}
+
+.container.container--column {
+  flex-direction: column;
+}
+
+.container.space-between {
+  justify-content: space-between;
+}
+
+.container.justify-center {
+  justify-content: center;
+}
+
+.container.container--cart {
+  position: absolute;
+  background-color: var(--primary);
+  color: var(--white);
+  justify-content: space-around;
+  align-items: center;
+  gap: 16px;
+  top: 228px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  height: 44px;
+  width: 160px;
+  border-radius: 50px;
+  border: solid 1px var(--primary);
+
+  p {
+    color: var(--white);
+  }
+}
+
+.cart-container {
+  margin-top: 90px;
+  width: auto;
+  flex: 1;
+  padding: 2rem 1.5rem;
+  background-color: var(--white);
+  border-radius: 16px;
+  height: fit-content;
+}
+
+.desserts-container {
+  width: calc((800 / 1440) * 100vw);
+  flex-grow: 2;
+}
+
+@media all and (max-width: 936px) {
+  .desserts-container {
+    width: auto;
+  }
+}
+
+@media all and (max-width: 700px) {
+  .container--main {
+    flex-direction: column;
+  }
+}

@@ -1,11 +1,12 @@
 import { createNewCartConfirmationItem } from "./components/cartConfirmationItem.js";
 import { createNewCartItem } from "./components/cartItem.js";
 import { createNewDessertCard } from "./components/dessertCard.js";
-import { formatNumberWithTwoDecimals } from "./utils.js";
+import { getTotal, updateTotal } from "./utils.js";
 
 let cart = [];
 let dessertsData = [];
 let currentId = 0;
+let totalAmount = 0;
 
 await fetch("./data.json")
   .then((res) => res.json())
@@ -101,21 +102,27 @@ const update = (cart) => {
     });
   });
 
-  getTotal(cart);
-};
-
-const getTotal = (cart) => {
-  let total = 0;
-  const totalHtml = document.getElementById("big-total");
-
-  cart.forEach((item) => {
-    total += item.price * item.quantity;
-  });
-
-  totalHtml.textContent = formatNumberWithTwoDecimals(total);
+  totalAmount = getTotal(cart);
+  updateTotal(totalAmount);
 };
 
 update(cart);
+
+const removeItem = (itemId) => {
+  cart = cart.filter((item) => item.id !== itemId);
+  const dessertsItemDom = document.getElementById(itemId);
+  dessertsItemDom.querySelector(".quantity").textContent = 0;
+  update(cart);
+};
+
+const resetOrder = () => {
+  cart = [];
+  confirmationModal.classList.remove("open");
+  const dessertsDom = document.querySelectorAll(".desserts__item");
+  dessertsDom.forEach(
+    (dessert) => (dessert.querySelector(".quantity").textContent = 0)
+  );
+};
 
 const handleQuantity = (currentId, method) => {
   const cartItem = cart.find((item) => item.id === currentId);
@@ -176,25 +183,10 @@ const resetAddToCartButtons = () => {
 confirmationBtn.addEventListener("click", () => {
   cart.forEach((item) => createNewCartConfirmationItem(item));
   confirmationModal.classList.add("open");
+  updateTotal(totalAmount);
 });
 
 startNewOrderBtn.addEventListener("click", () => {
   resetOrder();
   update(cart);
 });
-
-const removeItem = (itemId) => {
-  cart = cart.filter((item) => item.id !== itemId);
-  const dessertsItemDom = document.getElementById(itemId);
-  dessertsItemDom.querySelector(".quantity").textContent = 0;
-  update(cart);
-};
-
-const resetOrder = () => {
-  cart = [];
-  confirmationModal.classList.remove("open");
-  const dessertsDom = document.querySelectorAll(".desserts__item");
-  dessertsDom.forEach(
-    (dessert) => (dessert.querySelector(".quantity").textContent = 0)
-  );
-};

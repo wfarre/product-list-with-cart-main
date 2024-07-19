@@ -1,0 +1,10 @@
+.header {
+  margin-top: 90px;
+  margin-bottom: 2rem;
+}
+
+.header .title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--black);
+}

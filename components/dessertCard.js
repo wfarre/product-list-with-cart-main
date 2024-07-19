@@ -15,24 +15,24 @@ export const createNewDessertCard = (el, index) => {
               </picture>
             </div>
     
-            <button class="btn btn--add add-to-cart-btn">
+            <button class="btn btn--add container items-center justify-center add-to-cart-btn">
               <img src="./assets/images/icon-add-to-cart.svg" alt="">
               Add to Cart
             </button>
             <div class="container container--cart add-quantity hidden">
-                <button class="btn-cart decrement-btn" id="decrement-${
+                <button class="btn btn--icon decrement-btn" id="decrement-${
                   el.id
                 }" aria-label="increment">
                     <img src="./assets/images/icon-decrement-quantity.svg" alt="">
                 </button>
                 <p class="quantity">0</p>
-                <button class="btn-cart increment-btn" id="increment-${
+                <button class="btn btn--icon increment-btn" id="increment-${
                   el.id
                 }" aria-label="decrement">
                     <img src="./assets/images/icon-increment-quantity.svg" alt="">
                 </button>
             </div>
-            <ul class="info">
+            <ul class="info container container--column">
               <li class="info__item">
                 <span class="type">${el.category}</span>
               </li>

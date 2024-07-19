@@ -4,26 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- displays site properly based on user's device -->
-
-  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
 
   <title>Frontend Mentor | Product list with cart</title>
+  <meta name="description" content="product list with cart">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
   <link rel="stylesheet" href="./assets/styles/styles.css">
 
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-    .attribution {
-      font-size: 11px;
-      text-align: center;
-    }
-
-    .attribution a {
-      color: hsl(228, 45%, 44%);
-    }
-  </style>
-
-
+  <script src="./index.js" async type="module"></script>
 </head>
 
 <body>
@@ -37,11 +25,12 @@
       </header>
       <ul class="list container container--column" id="cart-confirmation">
 
-        <li class="order-total container">
-          <h4>Order Total</h4>
-          <p class="total-price">$0.00</p>
-        </li>
+
       </ul>
+      <figure class="order-total container">
+        <figcaption>Order Total</figcaption>
+        <p class="total-price">$<span class="total-price" id="confirmation-total">0.00</span></p>
+      </figure>
 
       <footer>
         <button class="btn btn--confirm" id="start-new-order-btn">Start New Order</button>
@@ -85,8 +74,6 @@
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>.
     Coded by <a href="#">Your Name Here</a>.
   </footer>
-
-  <script src="./index.js" type="module"></script>
 </body>
 
 </html>

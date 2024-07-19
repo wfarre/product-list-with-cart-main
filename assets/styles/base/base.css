@@ -1,0 +1,36 @@
+*,
+html {
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  list-style: none;
+  color: var(--black);
+  font-family: "Red Hat Text", sans-serif;
+}
+
+body {
+  background-color: var(--bg-primary);
+  padding-left: calc((110 / 1440 * 100vw));
+  padding-right: calc((110 / 1440 * 100vw));
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.hidden {
+  position: absolute;
+  opacity: 0;
+  transform: translate(-50%, -100%) !important;
+}
+
+@media all and (max-width: 700px) {
+  html {
+    font-size: 13px;
+  }
+
+  body {
+    padding: 0 calc((24 / 375) * 100vw);
+  }
+}

@@ -1,0 +1,65 @@
+.card {
+  position: relative;
+}
+
+.card button {
+  pointer-events: auto;
+}
+
+.card {
+  pointer-events: none;
+}
+
+.card:hover img,
+.card:hover source {
+  transform: scale(1.1);
+}
+
+.info {
+  margin-top: 40px;
+  gap: 0;
+}
+
+.info__item .title {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--black);
+}
+.info__item .type {
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.info__item .price {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.image-wrapper {
+  position: relative;
+
+  height: 250px;
+  width: 100%;
+
+  background-color: red;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.image-wrapper picture {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.image-wrapper picture source,
+.image-wrapper picture img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 300ms;
+}

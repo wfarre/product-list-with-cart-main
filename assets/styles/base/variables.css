@@ -1,0 +1,11 @@
+:root {
+  --primary: hsl(14, 86%, 42%);
+  --green: hsl(159, 69%, 38%);
+
+  --white: hsl(20, 50%, 98%);
+  --bg-primary: hsl(13, 31%, 94%);
+  --text-primary: hsl(14, 25%, 72%);
+  --text-secondary: hsl(7, 20%, 60%);
+  --btn-secondary: hsl(12, 20%, 44%);
+  --black: hsl(14, 65%, 9%);
+}
